@@ -10,50 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-int arr_size(char	*s)
+int ft_strlcat(char	*dest, char	*src, unsigned int nb)
 {
-	int n;
-
-	n = 0;
-	while (s[n])
+  nb--;
+	while (*src)
 	{
-		n++;
+    src++;
+    nb++;
 	}
-	return n;
-}
-
-unsigned int ft_strlcat(char *dest, char *src, unsigned int size)
-{
-	int i;
-	int ii;
-
-	i = size;
-	ii = 0;
-	printf("array size is: %d\n", arr_size(dest));
-	while(src[ii])
-	{	
-		dest[i] = src[ii];
-		//printf("index is: %d", i);
-		//printf("%c \n", dest[i]);
-		//printf("%s", dest);
-		//src++;
-		i++;
-		ii++;
-	}	
-	dest[i] = '\0';
-	printf("%d", arr_size(dest));
-	return arr_size(dest);
+	return nb;
 }
 
 int main(void)
 {
-	char src[] = "Hejio";
+	char src[20] = "Hejio";
 	char dest[] = "Ok kor";
 	
-	//printf("%lu", sizeof(dest));
-	ft_strlcat(dest, src, sizeof(dest));
-
-//	printf("%s", dest);
+	printf("before : %lu", sizeof(dest));
+	int n = ft_strlcat(dest, src, sizeof(dest));
+  printf("After : %s - %d", dest, n);
 }
