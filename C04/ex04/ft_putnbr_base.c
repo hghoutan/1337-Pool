@@ -6,104 +6,100 @@
 /*   By: hghoutan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:06:15 by hghoutan          #+#    #+#             */
-/*   Updated: 2024/09/02 19:09:45 by hghoutan         ###   ########.fr       */
+/*   Updated: 2024/09/05 23:37:40 by hghoutan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 
-void convert_to_char(int nbr, char *c_nbr, int *i)
+int	logt(int n, int p)
 {
-  if(nbr > 9)
-  {
-    convert_to_char(nbr / 10, c_nbr, i);
-  }
-  c_nbr[*i] = (nbr % 10) + '0';
-  (*i)++;
-  c_nbr[*i + 1] = '\0';
+	if (p != 1)
+		n = 10 * logt(n, p - 1);
+	return (n);
 }
 
-int power(int n, int p)
+int	convert_base_to_int(char	*base, int	*n)
 {
-  if(p == 1)
-  {
-    return n;
-  }
-  n = n * 10;
-  return power(n, p - 1);
-}
-int pp(int n, int p)
-{
-  if(p == 2)
-  {
-    return n;
-  }
-  n = n * n;
-  return power(n, p - 1);
-}
+	int	length;
+	int	s;
 
-int convert_base_to_int(char *base, int  *n)
-{
-  int count;
-  int s;
-
-  count = 0;
-  while (base[count])
-  {
-    count++;
-  }
-  s = count;
-  while (*base)
-  {
-    *n += power(*base - 48, count);
-    count--;
-    base++;
-  }  
-  return s;
-}
-
-void calculate_num(int num, int base, int size)
-{
-  int m;
-  int r;
-  int c;
-
-  r = 0;
-
-  while (num / base != 0)
+	length = 0;
+	while (base[length])
 	{
-		r = num % base;
-    printf("%d - ", r);
-		//int_hexa(r, cc);
-		num /= base;
-		num++;
+		length++;
 	}
-	r = num % base;
-  printf("%d - ", r);
-	//int_hexa(r, cc);
-  // while (*num)
-  // {
-  //   m += (*num) * pp(base, size);
-  //   size--;
-  //   num++;
-  // }
+	s = length;
+	while (*base)
+	{
+		*n += logt(*base - 48, length);
+		length--;
+		base++;
+	}
+	return (s);
 }
 
-void  ft_putnbr_base(int nbr, char  *base)
+char	convert_base(int n, int base)
 {
-  char c_nbr[20] = "";
-  int i_base;
-  int length;
+	char	*hexa;
+	char	*octal;
 
-  length = 0;
-  i_base = 0;
-  convert_base_to_int(base, &i_base);
-  convert_to_char(nbr, c_nbr, &length);
-  calculate_num(nbr, i_base, length);
+	hexa = "0123456789ABCDEF";
+	octal = "poneyvif";
+	if (base == 16)
+		return (hexa[n]);
+	if (base == 8)
+		return (octal[n]);
+	return (n + '0');
 }
 
-int main(void)
+void	convert_num(int num, int base)
 {
-  ft_putnbr_base(2324, "16");
+	int		size;
+	int		i;
+	char	cc[30];
+	char	c;
+
+	i = 0;
+	while (num / base != 0)
+	{
+		cc[i] = convert_base(num % base, base);
+		num = num / base;
+		i++;
+	}
+	cc[i] = convert_base(num % base, base);
+	size = i + 1;
+	i = -1;
+	while (++i < (size / 2))
+	{
+		c = cc[i];
+		cc[i] = cc[size - i - 1];
+		cc[size - i - 1] = c;
+	}
+	cc[size] = '\0';
+	write(1, cc, size);
 }
+
+void	ft_putnbr_base(int nbr, char	*base)
+{
+	int	i;
+
+	i = 0;
+	if (base[i] == '\0')
+		return (void);
+	while (base[i])
+	{
+		if (base[i] == ' ' || base[i] == '-' || base[i] == '+')
+			return (void);
+		i++;
+	}
+	if (nbr < 0)
+	{
+		nbr = (-nbr);
+		write(1, "-", 1);
+	}
+	i = 0;
+	convert_base_to_int(base, &i);
+	convert_num(nbr, i);
+}
+
