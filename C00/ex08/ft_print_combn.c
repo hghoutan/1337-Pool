@@ -38,12 +38,13 @@ int	power(int n, int p)
 
 void	ft_print_combn(int n)
 {
-	int number[2];
+	int number[n];
 	char c;
 	
 	number[0] = 0;
 	while(number[0] <= (10 - n))
 	{
+    
 		number[1] = number[0] + 1;
 		while (number[1] <= (10 - (n - 1)))
 		{
@@ -57,6 +58,12 @@ void	ft_print_combn(int n)
 		number[0]++;
 	}	
 }
+
+void recursive_fun(int n)
+{
+  
+}
+
 
 int	main(void)
 {

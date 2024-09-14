@@ -30,24 +30,12 @@ char	*ft_strcat(char	*dest, char	*src)
 
 	n = arr_size(dest);
 	i = 0;
-	while (src[i])
+	while (*src)
 	{
-		dest[n] = src[i];
-		i++;
-		n++;
+    dest[n + i] = *src;
+    src++;
+    i++;
 	}
-	dest[n] = '\0';
+  dest[n+ i] = '\0';
 	return dest;
-}
-
-int main() {
-    char ch[] = "Hey how are you";
-    char chh[] = "fiuwdsf dsffdd";
-
-    char	*tt;
-	tt  = ft_strcat(ch, chh);
-
-	printf("%s", tt);
-
-    return 0;
 }

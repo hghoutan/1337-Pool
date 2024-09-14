@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+
 int is_valid(int i, int count, char	*to_find, char *str)
 {
 	int flag;
@@ -48,8 +50,11 @@ char	*ft_strstr(char	*str, char	*to_find)
 			index = count;
 			flag = is_valid(i, count, to_find, str);
 			if(flag != 0)
-				return str+index;
+      {
+        return str+index;
+      }
 		}
+    i++;
 		count++;
 	}
 	return ("\0");
