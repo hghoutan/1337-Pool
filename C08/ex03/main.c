@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_point.h                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hghoutan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 20:30:47 by hghoutan          #+#    #+#             */
-/*   Updated: 2024/09/15 01:05:56 by hghoutan         ###   ########.fr       */
+/*   Created: 2024/09/15 00:52:32 by hghoutan          #+#    #+#             */
+/*   Updated: 2024/09/15 01:07:49 by hghoutan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_POINT_H
-# define FT_POINT_H
+#include "ft_point.h"
+#include <stdio.h>
 
-typedef struct s_point
+void	set_point(t_point *point)
 {
-	int	x;
-	int	y;
-}	t_point;
+	point->x = 42;
+	point->y = 21;
+}
 
-void	set_point(t_point *point);
+int main(void)
+{
+	t_point	point;
 
-#endif
+	set_point(&point);
+	printf("x is %d, y is :%d", point.x, point.y);
+	return (0);
+}
