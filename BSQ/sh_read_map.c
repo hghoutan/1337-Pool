@@ -83,36 +83,70 @@ void	ft_get_second_line(int fd)
 	}
 }
 
-char	**ft_read_file(char *argv)
-{
-	char	**buf;
-	int		i;
-	int		fd;
-	int		c;
-	int		l;
+char **ft_read_file(char *argv) {
+    char **buf;
+    int lines;
+    int columns;
+    int fd;
 
-	i = 0;
-	c = ft_get_number_columns(argv);
-	l = ft_get_number_lines(argv);
-	fd = open(argv, O_RDONLY);
-	ft_get_second_line(fd);
-	buf = malloc(l * sizeof(char *));
-	if (buf == NULL)
-		return (NULL);
-	while (i < l)
-	{
-		buf[i] = malloc(c * sizeof(char));
-		if (buf[i] == NULL)
-			return (NULL);
-		i++;
-	}
-	i = 0;
-	while (i < l)
-	{
-		if (read(fd, buf[i], c) == -1)
-			return (NULL);
-		buf[i++][c - 1] = '\0';
-	}
-	close(fd);
-	return (buf);
+    columns = ft_get_number_columns(argv);
+    lines = ft_get_number_lines(argv);
+    fd = open(argv, O_RDONLY);
+    
+    if (fd < 0) {
+        return NULL; // Handle file open error
+    }
+
+    ft_get_second_line(fd);
+    buf = allocate_buffer(lines, columns);
+    
+    if (buf == NULL) {
+        close(fd);
+        return NULL; // Handle memory allocation error
+    }
+
+    if (read_lines(fd, buf, lines, columns) == -1) {
+        free_buffer(buf, lines);
+        close(fd);
+        return NULL; // Handle read error
+    }
+
+    close(fd);
+    return buf;
 }
+
+char **allocate_buffer(int lines, int columns) {
+    char **buf = malloc(lines * sizeof(char *));
+    
+    if (buf == NULL) {
+        return NULL; // Handle memory allocation error
+    }
+
+    for (int i = 0; i < lines; i++) {
+        buf[i] = malloc(columns * sizeof(char));
+        if (buf[i] == NULL) {
+            free_buffer(buf, i); // Free already allocated lines
+            return NULL; // Handle memory allocation error
+        }
+    }
+
+    return buf;
+}
+
+int read_lines(int fd, char **buf, int lines, int columns) {
+    for (int i = 0; i < lines; i++) {
+        if (read(fd, buf[i], columns) == -1) {
+            return -1; // Read error
+        }
+        buf[i][columns - 1] = '\0'; // Null-terminate the string
+    }
+    return 0; // Success
+}
+
+void free_buffer(char **buf, int lines) {
+    for (int i = 0; i < lines; i++) {
+        free(buf[i]);
+    }
+    free(buf);
+}
+

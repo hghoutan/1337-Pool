@@ -50,5 +50,14 @@ int			**ft_generate_map(int l, int c);
 int			ft_biggest_square(t_BSQ_Map map);
 int			ft_find_position_square(t_BSQ_Map map);
 char		**ft_fill_map(t_BSQ_Map map);
+int calculate_biggest_square(t_BSQ_Map map, int **c_m);
+int process_row(t_BSQ_Map map, int **c_m, int i, int count_max);
+int find_square_position(t_BSQ_Map map, int **c_m, int count_max);
+int process_row_for_position(t_BSQ_Map map, int **c_m, int count_max, int i, int position);
+char **allocate_buffer(int lines, int columns);
+int read_lines(int fd, char **buf, int lines, int columns);
+void free_buffer(char **buf, int lines);
+void read_file_contents(int fd, char *buf, int size_file);
+int verify_characters(char *buf, char v, char o);
 
 #endif

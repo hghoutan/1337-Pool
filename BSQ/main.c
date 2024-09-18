@@ -42,8 +42,8 @@ char	**ft_fill_map(t_BSQ_Map map)
 
 void	ft_print_solution(int i, char **argv)
 {
-	int		j;
-	int		fd;
+	int			j;
+	int			fd;
 	t_BSQ_Map	map;
 
 	map.map = NULL;

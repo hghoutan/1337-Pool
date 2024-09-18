@@ -12,36 +12,60 @@
 
 #include "sh_bsq.h"
 
-int	ft_verif_chars(char *argv)
-{
-	int		i;
-	int		fd;
-	int		size_file;
-	char	*buf;
-	char	v;
-	char	o;
+int ft_verif_chars(char *argv) {
+    int fd, size_file;
+    char *buf, v, o;
 
-	i = 0;
-	v = ft_get_char_void(argv);
-	o = ft_get_char_obst(argv);
-	ft_get_char_full(argv);
-	size_file = ft_size_file(argv);
-	fd = open(argv, O_RDONLY);
-	ft_get_second_line(fd);
-	buf = malloc(size_file * sizeof(char));
-	if (buf == NULL)
-		return (0);
-	while ((read(fd, buf, size_file)))
-		buf[read(fd, buf, size_file)] = '\0';
-	while (buf[i])
-	{
-		if (buf[i] != v && buf[i] != o && buf[i] != '\n')
-			return (1);
-		i++;
-	}
-	close(fd);
-	free(buf);
-	return (0);
+    // Initialize variables
+    v = ft_get_char_void(argv);
+    o = ft_get_char_obst(argv);
+    ft_get_char_full(argv);
+
+    // Get file size and open file
+    size_file = ft_size_file(argv);
+    fd = open(argv, O_RDONLY);
+
+    // Skip the first line
+    ft_get_second_line(fd);
+
+    // Allocate memory for the buffer
+    buf = malloc(size_file * sizeof(char));
+    if (buf == NULL) {
+        return 0;
+    }
+
+    // Read the file contents into the buffer
+    read_file_contents(fd, buf, size_file);
+
+    // Verify the characters in the buffer
+    if (!verify_characters(buf, v, o)) {
+        return 1;
+    }
+
+    // Close the file and free the buffer
+    close(fd);
+    free(buf);
+
+    return 0;
+}
+
+// Read the file contents into the buffer
+void read_file_contents(int fd, char *buf, int size_file) {
+    while (read(fd, buf, size_file)) {
+        buf[read(fd, buf, size_file)] = '\0';
+    }
+}
+
+// Verify the characters in the buffer
+int verify_characters(char *buf, char v, char o) {
+    int i = 0;
+    while (buf[i]) {
+        if (buf[i] != v && buf[i] != o && buf[i] != '\n') {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
 }
 
 int	ft_get_next_columns(char *argv, int fd)
