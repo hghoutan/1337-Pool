@@ -1,101 +1,110 @@
-#include "BSQ.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hghoutan <hghoutan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/17 16:41:49 by hghoutan          #+#    #+#             */
+/*   Updated: 2024/09/17 21:13:36 by hghoutan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sh_bsq.h"
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include <string.h>
+#include <unistd.h>
 
-char            **ft_fill_map(char **map, int c, int l, char o, char p)
+char	**ft_fill_map(t_BSQ_Map map)
 {
-    int i;
-    int j;
-    int length;
-    int pos;
+	int	i;
+	int	j;
+	int	length;
+	int	pos;
 
-    length = ft_biggest_square(map, c, l, o);
-    pos = ft_find_position_square(map, c, l, o);
-    i = (pos / (c - 1)) - length + 1;
-    while (i < (pos / (c - 1)) + 1)
-    {
-        j = (pos % (c -1)) - length + 1;
-        while (j < (pos % (c -1)) + 1)
-        {
-            map[i][j] = p;
-            j++;
-        }
-        i++;
-    }
-    return (map);
+	length = ft_biggest_square(map);
+	pos = ft_find_position_square(map);
+	i = (pos / (map.c - 1)) - length + 1;
+	while (i < (pos / (map.c - 1)) + 1)
+	{
+		j = (pos % (map.c - 1)) - length + 1;
+		while (j < (pos % (map.c - 1)) + 1)
+		{
+			map.map[i][j] = map.p;
+			j++;
+		}
+		i++;
+	}
+	return (map.map);
 }
 
-void         ft_print_solution(int i, char **argv)
+void	ft_print_solution(int i, char **argv)
 {
-    int fd;
-    char **map = NULL;
-    int j;
-    int c;
-    int l;
-    char o;
-    char p;
+	int		j;
+	int		fd;
+	t_BSQ_Map	map;
 
-    j = 0;
-    o = ft_get_char_obst(argv[i]);
-    p = ft_get_char_full(argv[i]);
-    c = ft_get_number_columns(argv[i]);
-    l = ft_get_number_lines(argv[i]);
-    fd = open (argv[i], O_RDONLY);
-    if (fd >= 0)
-    {
-        map = ft_read_file(argv[i]);
-    }
-    ft_fill_map(map, c, l, o, p);
-    while (j < l)
-    {
-        ft_putstr(map[j]);
-        ft_putchar('\n');
-        j++;
-    }
-    free(map);
-    close (fd);
+	map.map = NULL;
+	j = 0;
+	map.o = ft_get_char_obst(argv[i]);
+	map.p = ft_get_char_full(argv[i]);
+	map.c = ft_get_number_columns(argv[i]);
+	map.l = ft_get_number_lines(argv[i]);
+	fd = open(argv[i], O_RDONLY);
+	if (fd >= 0)
+	{
+		map.map = ft_read_file(argv[i]);
+	}
+	ft_fill_map(map);
+	while (j < map.l)
+	{
+		ft_putstr(map.map[j]);
+		ft_putchar('\n');
+		j++;
+	}
+	free(map.map);
+	close(fd);
 }
 
-int         main(int argc, char ** argv)
+void	ft_hanlde_stdin(void)
 {
-    int i;
-    int fd;
-    char *buffer;
+	int		fd;
+	char	*buffer;
+	char	*av;
 
-    i = 1;
-    if (argc > 1)
-    {
-        while (i < argc)
-        {
-            if ((ft_verif_map(argv[i])) == 1)
-            {
-            ;
-            }
-            else
-            {
-                ft_print_solution(i, argv);
-            }
-            i++;
-        }
-    }
-    else
-    {
-        fd = open("maps/map_input.txt", O_WRONLY | O_CREAT, 0666);
-        buffer = sh_stdin();
-        write(fd, buffer, strlen(buffer));
-        if (ft_verif_map("maps/map_input.txt") == 1)
-                {
-                printf("ok");
-                }
-                else
-                {
-                    char *av[] = {"maps/map_input.txt"};
+	av = "maps/map_input.txt";
+	fd = open("maps/map_input.txt", O_RDWR | O_CREAT, 0666);
+	buffer = sh_stdin();
+	write(fd, buffer, strlen(buffer));
+	if (ft_verif_map("maps/map_input.txt") == 1)
+	{
+		printf("ok");
+	}
+	else
+	{
+		ft_print_solution(0, &av);
+	}
+}
 
-                ft_print_solution(0, av);
-                }
-    }
-    return (0);
+int	main(int argc, char **argv)
+{
+	int	i;
+
+	i = 1;
+	if (argc > 1)
+	{
+		while (i < argc)
+		{
+			if ((ft_verif_map(argv[i])) != 1)
+				ft_print_solution(i, argv);
+			i++;
+		}
+	}
+	else
+	{
+		ft_hanlde_stdin();
+	}
+	return (0);
 }

@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_print.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hghoutan <hghoutan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hghoutan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 20:45:15 by hghoutan          #+#    #+#             */
-/*   Updated: 2024/09/17 21:13:36 by hghoutan         ###   ########.fr       */
+/*   Created: 2024/09/15 15:08:36 by hghoutan          #+#    #+#             */
+/*   Updated: 2024/09/15 15:11:09 by hghoutan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_bsq.h"
+void ft_putchar(char c);
+void ft_swap(int *a, int *b);
+void ft_putstr(char *str);
+int ft_strlen(char *str);
+int ft_strcmp(char *s1, char *s2);
 
-void	ft_putchar(char c)
+int main()
 {
-	write(1, &c, 1);
-}
-
-void	ft_putstr(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		ft_putchar(str[i]);
-		i++;
-	}
+	ft_putstr("Hey it's working");
+	return (0);
 }

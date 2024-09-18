@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_print.c                                         :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hghoutan <hghoutan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hghoutan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 20:45:15 by hghoutan          #+#    #+#             */
-/*   Updated: 2024/09/17 21:13:36 by hghoutan         ###   ########.fr       */
+/*   Created: 2024/09/15 14:18:53 by hghoutan          #+#    #+#             */
+/*   Updated: 2024/09/15 14:18:56 by hghoutan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_bsq.h"
-
-void	ft_putchar(char c)
+void	ft_swap(int *a, int *b)
 {
-	write(1, &c, 1);
-}
+	int	c;
 
-void	ft_putstr(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		ft_putchar(str[i]);
-		i++;
-	}
+	c = *b;
+	*b = *a;
+	*a = c;
 }

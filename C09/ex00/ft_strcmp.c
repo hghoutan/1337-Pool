@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_print.c                                         :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hghoutan <hghoutan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hghoutan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 20:45:15 by hghoutan          #+#    #+#             */
-/*   Updated: 2024/09/17 21:13:36 by hghoutan         ###   ########.fr       */
+/*   Created: 2024/09/15 14:17:48 by hghoutan          #+#    #+#             */
+/*   Updated: 2024/09/15 14:17:52 by hghoutan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_bsq.h"
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void	ft_putstr(char *str)
+int	ft_strcmp(char	*s1, char	*s2)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (s1[i])
 	{
-		ft_putchar(str[i]);
+		if ((unsigned char) s1[i] != (unsigned char) s2[i])
+		{
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		}
 		i++;
 	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_print.c                                         :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hghoutan <hghoutan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hghoutan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 20:45:15 by hghoutan          #+#    #+#             */
-/*   Updated: 2024/09/17 21:13:36 by hghoutan         ###   ########.fr       */
+/*   Created: 2024/09/15 14:20:36 by hghoutan          #+#    #+#             */
+/*   Updated: 2024/09/15 14:20:39 by hghoutan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_bsq.h"
+#include <unistd.h>
 
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
-}
-
-void	ft_putstr(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		ft_putchar(str[i]);
-		i++;
-	}
 }
